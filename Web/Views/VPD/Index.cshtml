@@ -25,5 +25,46 @@
         </div>
     </div>
 </div>
+@{
+    var grid = Html.Grid("grid")
+       .addColumn(new Column("DocumentoID").setHidden(true))
+       .addColumn(new Column("Numero").setLabel("Número").setAlign(Align.center).setWidth(30))
+       .addColumn(new Column("DataEmissao").setLabel("Data de Emissão").setAlign(Align.center).setWidth(30))
+       .addColumn(new Column("UnidadeGestora.UnidadeGestoraCodigo").setLabel("Unidade Gestora").setAlign(Align.left).setWidth(100))
+       .addColumn(new Column("CredorIdentificacao").setLabel("Credor").setAlign(Align.center).setWidth(100))
+       .addColumn(new Column("ValorDocumento").setLabel("Valor").setAlign(Align.right).setWidth(50))
+       .addColumn(new Column("TipoVPD").setLabel("Tipo VPD").setWidth(20).setAlign(Align.center).setSortable(false))
+       .addColumn(new Column("NumeroOriginal").setLabel("Número VPD Original").setAlign(Align.center).setWidth(30))
+       .setUrl(Url.Action("ConsultarGrid"))
+       .setRowNum(10)
+       .setViewRecords(true)
+       .setRequestType(RequestType.post)
+       .setSortName("Numero")
+       .setSortOrder(SortOrder.desc)
+       .setEmptyRecords("Nenhum registro encontrado.")
+       .setPager("pager")
+       .setPgInput(true)
+       .setAutoWidth(true)
+       .setHeight(255)
+       .setDataType(DataType.local)
+            .setSubGrid(new Grid("SubGrid")
+            .addColumn(new Column("VariacaoPatrimonialDiminutivaItemID").setHidden(true))
+            .addColumn(new Column("FonteRecurso").setLabel("Fonte de Recurso").setWidth(100).setAlign(Align.left))
+            .addColumn(new Column("NaturezaDespesaCodigo").setLabel("Natureza de Despesa").setWidth(100).setAlign(Align.left))
+            .addColumn(new Column("ValorSolicitado").setLabel("Valor Solicitado").setWidth(50).setAlign(Align.right).setSortable(false))
+            .addColumn(new Column("ValorEstorno").setLabel("Valor Estorno").setWidth(50).setAlign(Align.right).setSortable(false))
+            .addColumn(new Column("ValorLiquido").setLabel("Valor Líquido").setWidth(50).setAlign(Align.right).setSortable(false))
+            .setRequestType(RequestType.post)
+            .setUrl(VirtualPathUtility.ToAbsolute("~/Execucao/VPDPrevia/ConsultarSubGrid/"))
+            .setAutoWidth(true)
+            .setRowNum(5)
+            .setHoverRows(true)
+            .setHeaderTitles(true)
+            .onSelectedRow()
+            .setViewRecords(true)
+            .setSortOrder(SortOrder.desc))
+        .retornaGrid();
+}
+<div id="grid1" class="jqGrid_place">@grid</div>
 
 
